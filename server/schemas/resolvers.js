@@ -50,6 +50,7 @@ const resolvers = {
 
             return { token, user };
         },
+        //We save a book based on a username, authors, description, title, and more
         saveBook: async (parent, { username, authors, description, title, link, image, bookId }) => {
             const saveBookInput = {
                 authors: authors,
@@ -59,6 +60,7 @@ const resolvers = {
                 link: link,
                 title: title
             }
+            //Returning the updated saved book set for the user
             return await User.findOneAndUpdate(
                 { username: username },
                 { $addToSet: { savedBooks: saveBookInput } },
@@ -68,7 +70,9 @@ const resolvers = {
                 }
             )
         },
+        //Removing book based on username and book ID
         removeBook: async (parent, { username, bookId }) => {
+            //Returning updated saved books based on if one was removed
             return await User.findOneAndUpdate(
                 { username: username },
                 { $pull: { savedBooks: { bookId: bookId } } },
