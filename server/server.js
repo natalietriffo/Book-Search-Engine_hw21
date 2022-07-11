@@ -7,8 +7,9 @@ const { ApolloServer } = require('apollo-server-express');
 const { typeDefs, resolvers } = require('./schemas');
 const { authMiddleware } = require('./utils/auth');
 
-const app = express();
 const PORT = process.env.PORT || 3001;
+const app = express();
+
 // setting our server var
 const server = new ApolloServer({
   typeDefs,
@@ -17,7 +18,7 @@ const server = new ApolloServer({
 });
 // server middle ware for express
 server.applyMiddleware({ app });
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false}));
 app.use(express.json());
 
 // if we're in production, serve client/build as static assets
